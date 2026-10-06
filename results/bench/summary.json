@@ -1,0 +1,53 @@
+{
+  "compile_seconds": 6.0225523866407835,
+  "rows": [
+    {
+      "nodes": 1,
+      "steps_per_node": 524288.0,
+      "wall_seconds": 60.3,
+      "per_run_steps_per_sec": 9069.8,
+      "aggregate_steps_per_sec": 9069.8,
+      "cpu_percent_mean": 283.0,
+      "cpu_percent_max": 332.0,
+      "ok": 1,
+      "per_run_steady_steps_per_sec": 9659.4,
+      "aggregate_steady_steps_per_sec": 9659.4
+    },
+    {
+      "nodes": 2,
+      "steps_per_node": 524288.0,
+      "wall_seconds": 75.5,
+      "per_run_steps_per_sec": 7454.4,
+      "aggregate_steps_per_sec": 14908.7,
+      "cpu_percent_mean": 551.0,
+      "cpu_percent_max": 679.0,
+      "ok": 2,
+      "per_run_steady_steps_per_sec": 7546.2,
+      "aggregate_steady_steps_per_sec": 15092.3
+    },
+    {
+      "nodes": 4,
+      "steps_per_node": 524288.0,
+      "wall_seconds": 105.7,
+      "per_run_steps_per_sec": 5201.8,
+      "aggregate_steps_per_sec": 20807.0,
+      "cpu_percent_mean": 935.0,
+      "cpu_percent_max": 1168.0,
+      "ok": 4,
+      "per_run_steady_steps_per_sec": 5259.8,
+      "aggregate_steady_steps_per_sec": 21039.4
+    },
+    {
+      "nodes": 6,
+      "steps_per_node": 524288.0,
+      "wall_seconds": 141.0,
+      "per_run_steps_per_sec": 3838.7,
+      "aggregate_steps_per_sec": 23032.1,
+      "cpu_percent_mean": 1091.0,
+      "cpu_percent_max": 1163.0,
+      "ok": 6,
+      "per_run_steady_steps_per_sec": 3884.3,
+      "aggregate_steady_steps_per_sec": 23305.6
+    }
+  ]
+}

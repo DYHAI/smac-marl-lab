@@ -1,0 +1,50 @@
+Importing submoduled environments...
+Submoduled environments not found. Skipping import.
+=== mappo on smacv2_5_units ===
+envs=128 steps_per_env=128 total=524288 seed=7 jax_backend=cpu
+[mappo/smacv2_5_units] step=         0  return=   0.24  win=0.000
+[mappo/smacv2_5_units] step=     16384  return=   0.27  win=0.002
+[mappo/smacv2_5_units] step=     32768  return=   0.29  win=0.002
+[mappo/smacv2_5_units] step=     49152  return=   0.31  win=0.000
+[mappo/smacv2_5_units] step=     65536  return=   0.35  win=0.000
+[mappo/smacv2_5_units] step=     81920  return=   0.39  win=0.002
+[mappo/smacv2_5_units] step=     98304  return=   0.41  win=0.010
+[mappo/smacv2_5_units] step=    114688  return=   0.49  win=0.019
+[mappo/smacv2_5_units] step=    131072  return=   0.51  win=0.015
+[mappo/smacv2_5_units] step=    147456  return=   0.56  win=0.030
+[mappo/smacv2_5_units] step=    163840  return=   0.61  win=0.054
+[mappo/smacv2_5_units] step=    180224  return=   0.62  win=0.045
+[mappo/smacv2_5_units] step=    196608  return=   0.66  win=0.056
+[mappo/smacv2_5_units] step=    212992  return=   0.73  win=0.092
+[mappo/smacv2_5_units] step=    229376  return=   0.77  win=0.094
+[mappo/smacv2_5_units] step=    245760  return=   0.77  win=0.097
+[mappo/smacv2_5_units] step=    262144  return=   0.88  win=0.166
+[mappo/smacv2_5_units] step=    278528  return=   0.94  win=0.196
+[mappo/smacv2_5_units] step=    294912  return=   0.93  win=0.197
+[mappo/smacv2_5_units] step=    311296  return=   0.96  win=0.223
+[mappo/smacv2_5_units] step=    327680  return=   1.02  win=0.252
+[mappo/smacv2_5_units] step=    344064  return=   1.06  win=0.291
+[mappo/smacv2_5_units] step=    360448  return=   1.11  win=0.313
+[mappo/smacv2_5_units] step=    376832  return=   1.13  win=0.333
+[mappo/smacv2_5_units] step=    393216  return=   1.11  win=0.305
+[mappo/smacv2_5_units] step=    409600  return=   1.18  win=0.360
+[mappo/smacv2_5_units] step=    425984  return=   1.16  win=0.346
+[mappo/smacv2_5_units] step=    442368  return=   1.12  win=0.324
+[mappo/smacv2_5_units] step=    458752  return=   1.25  win=0.424
+[mappo/smacv2_5_units] step=    475136  return=   1.25  win=0.415
+[mappo/smacv2_5_units] step=    491520  return=   1.21  win=0.393
+[mappo/smacv2_5_units] step=    507904  return=   1.25  win=0.416
+=== done ===
+{
+  "algo": "mappo",
+  "map": "smacv2_5_units",
+  "seed": 7,
+  "total_timesteps": 524288.0,
+  "envs": 128,
+  "steps_per_env": 128,
+  "updates": 32,
+  "wall_seconds": 171.2,
+  "steps_per_second": 3063.0,
+  "final_return": 1.2504781484603882,
+  "final_win_rate": 0.4160206913948059
+}
