@@ -1,3 +1,15 @@
+> ### 这是 JaxMARL 的一个 fork
+>
+> 上游：[bold-lab-ai/JaxMARL](https://github.com/bold-lab-ai/JaxMARL)（Apache-2.0），
+> 保留了完整提交历史。
+>
+> 本 fork 新增的是 **在 Apple Silicon Mac 上跑 SMACv2 的 MARL 基线实验**：
+> SMAX 环境上的 MAPPO / IPPO / PQN-VDN 三个算法，含调度器、指标落盘和一键复现。
+>
+> - 实验说明与踩坑记录 → [`experiments/README.md`](experiments/README.md)
+> - 结果表 → [`RESULTS.md`](RESULTS.md)
+> - 训练曲线原始数据 → [`results/`](results/)
+
 <h1 align="center">JaxMARL</h1>
 
 <p align="center">

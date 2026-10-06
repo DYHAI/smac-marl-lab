@@ -1,0 +1,18 @@
+{
+  "mappo|smacv2_10_units": {
+    "algo": "mappo",
+    "map": "smacv2_10_units",
+    "seeds": 1,
+    "final_win_rate_mean": 7.463057745416427e-05,
+    "final_win_rate_std": 0.0,
+    "final_return_mean": 0.3368331845381751
+  },
+  "mappo|smacv2_5_units": {
+    "algo": "mappo",
+    "map": "smacv2_5_units",
+    "seeds": 3,
+    "final_win_rate_mean": 0.03773203864693642,
+    "final_win_rate_std": 0.011273110403223149,
+    "final_return_mean": 0.5931662718454996
+  }
+}

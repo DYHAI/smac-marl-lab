@@ -9,10 +9,13 @@ __pycache__/
 .ipynb_checkpoints/
 docker/*
 *.pickle
-results/
+# 上游默认忽略 results/。这个 fork 里 results/ 全是实验结果（逐步曲线的
+# JSONL + 汇总 JSON + 对比图），要进仓库当证据，所以只忽略临时目录。
+results/partial_*/
 tmp/
 *-checkpoint.py
 wandb/
 outputs/
 models/
 build/
+logs/

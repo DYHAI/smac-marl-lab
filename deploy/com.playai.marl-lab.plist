@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.playai.marl-lab</string>
+
+  <!-- 跑 MARL 实验矩阵。跑完自己退出，不做 KeepAlive。
+       手动停：launchctl bootout gui/$(id -u)/com.playai.marl-lab -->
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/sh</string>
+    <string>/Users/dingding/srv/marl-lab/experiments/run_all.sh</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/dingding/srv/marl-lab</string>
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/dingding/srv/marl-lab/logs/run_all.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/dingding/srv/marl-lab/logs/run_all.err.log</string>
+</dict>
+</plist>

@@ -1,0 +1,13 @@
+{
+  "algo": "mappo",
+  "map": "smacv2_10_units",
+  "seed": 0,
+  "total_timesteps": 10000000.0,
+  "envs": 128,
+  "steps_per_env": 128,
+  "updates": 610,
+  "wall_seconds": 4286.1,
+  "steps_per_second": 2333.1,
+  "final_return": 1.6830251216888428,
+  "final_win_rate": 0.7574257254600525
+}
