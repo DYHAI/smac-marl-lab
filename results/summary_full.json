@@ -1,0 +1,42 @@
+{
+  "ippo|smacv2_10_units": {
+    "algo": "ippo",
+    "map": "smacv2_10_units",
+    "seeds": 3,
+    "final_win_rate_mean": 0.3352196315924327,
+    "final_win_rate_std": 0.032640525766939404,
+    "final_return_mean": 1.1569695870081584
+  },
+  "mappo|smacv2_10_units": {
+    "algo": "mappo",
+    "map": "smacv2_10_units",
+    "seeds": 3,
+    "final_win_rate_mean": 0.7698126633961996,
+    "final_win_rate_std": 0.022522014742628046,
+    "final_return_mean": 1.6960102717081706
+  },
+  "ippo|smacv2_5_units": {
+    "algo": "ippo",
+    "map": "smacv2_5_units",
+    "seeds": 3,
+    "final_win_rate_mean": 0.631696879863739,
+    "final_win_rate_std": 0.034500465422543355,
+    "final_return_mean": 1.539513349533081
+  },
+  "mappo|smacv2_5_units": {
+    "algo": "mappo",
+    "map": "smacv2_5_units",
+    "seeds": 3,
+    "final_win_rate_mean": 0.8153199354807535,
+    "final_win_rate_std": 0.010501069444516781,
+    "final_return_mean": 1.7615320285161336
+  },
+  "pqn_vdn_rnn|smacv2_5_units": {
+    "algo": "pqn_vdn_rnn",
+    "map": "smacv2_5_units",
+    "seeds": 3,
+    "final_win_rate_mean": 0.7177417874336243,
+    "final_win_rate_std": 0.016983366926693406,
+    "final_return_mean": 1.6103071371714275
+  }
+}

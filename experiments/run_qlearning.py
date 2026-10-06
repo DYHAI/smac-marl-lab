@@ -53,6 +53,18 @@ def to_plain(value):
     return None
 
 
+def _last_metric(captured: list[dict], *names: str):
+    """按优先级取最后一个非空的指标值（各算法键名不统一）。"""
+    if not captured:
+        return None
+    last = captured[-1]
+    for name in names:
+        value = last.get(name)
+        if value is not None:
+            return value
+    return None
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--script", required=True, choices=sorted(SCRIPTS))
@@ -153,8 +165,13 @@ def main() -> int:
         "steps_per_env": merged["NUM_STEPS"],
         "wall_seconds": round(elapsed, 1),
         "steps_per_second": round(merged["TOTAL_TIMESTEPS"] / elapsed, 1),
-        "final_return": captured[-1].get("returns") if captured else None,
-        "final_win_rate": captured[-1].get("win_rate") if captured else None,
+        # Q 学习系的键名和 PPO 系不一样：没有 returns/win_rate，
+        # 而是 returned_episode_returns / returned_won_episode，
+        # 外加 test_ 前缀的贪心评测版（更干净，优先用它）
+        "final_return": _last_metric(captured, "returns", "test_returned_episode_returns",
+                                     "returned_episode_returns"),
+        "final_win_rate": _last_metric(captured, "win_rate", "test_returned_won_episode",
+                                       "returned_won_episode"),
     }
     print("=== done ===", flush=True)
     print(json.dumps(summary, ensure_ascii=False, indent=2), flush=True)

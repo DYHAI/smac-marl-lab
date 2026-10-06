@@ -1,0 +1,13 @@
+{
+  "algo": "ippo",
+  "map": "smacv2_10_units",
+  "seed": 0,
+  "total_timesteps": 10000000.0,
+  "envs": 128,
+  "steps_per_env": 128,
+  "updates": 610,
+  "wall_seconds": 4351.7,
+  "steps_per_second": 2298.0,
+  "final_return": 1.2016948461532593,
+  "final_win_rate": 0.37024223804473877
+}

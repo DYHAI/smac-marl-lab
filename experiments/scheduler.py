@@ -46,6 +46,10 @@ def tag_for(algo: str, map_name: str, seed: int) -> str:
     return f"{short}_{map_name}_s{seed}"
 
 
+def steps_for(algo: str, steps_ppo: float, steps_ql: float) -> float:
+    return steps_ppo if ENGINE_FOR_ALGO[algo] == "ppo" else steps_ql
+
+
 def build_command(algo: str, map_name: str, seed: int, steps: float, out: Path) -> list[str]:
     engine = ENGINE_FOR_ALGO[algo]
     if engine == "ppo":
@@ -66,9 +70,14 @@ def main() -> int:
     parser.add_argument("--engine", choices=["ppo", "ql"], required=True)
     parser.add_argument("--concurrency", type=int, default=4)
     parser.add_argument("--steps", type=float, required=True)
+    parser.add_argument("--steps-ql", type=float, default=None,
+                        help="值学习系单独用不同预算（不给就跟 --steps 一致）")
     parser.add_argument("--algo", required=True, help="逗号分隔")
     parser.add_argument("--map", required=True, help="逗号分隔")
+    parser.add_argument("--map-ql", default=None,
+                        help="值学习系单独用不同场景列表（不给就跟 --map 一致）")
     parser.add_argument("--seed", required=True, help="逗号分隔")
+    parser.add_argument("--dry-run", action="store_true", help="只打印队列，不启动")
     args = parser.parse_args()
 
     RESULTS.mkdir(exist_ok=True)
@@ -76,20 +85,28 @@ def main() -> int:
 
     algos = [a.strip() for a in args.algo.split(",") if a.strip()]
     maps = [m.strip() for m in args.map.split(",") if m.strip()]
+    maps_ql = ([m.strip() for m in args.map_ql.split(",") if m.strip()]
+               if args.map_ql else maps)
     seeds = [int(s) for s in args.seed.split(",") if s.strip()]
 
     queue = []
     for algo in algos:
-        for map_name in maps:
+        algo_maps = maps if ENGINE_FOR_ALGO[algo] == "ppo" else maps_ql
+        for map_name in algo_maps:
             for seed in seeds:
                 tag = tag_for(algo, map_name, seed)
                 out = RESULTS / f"{tag}.jsonl"
                 if (RESULTS / f"{tag}.summary.json").exists():
                     print(f"[skip] {tag} 已有结果", flush=True)
                     continue
-                queue.append((tag, build_command(algo, map_name, seed, args.steps, out), out))
+                steps = steps_for(algo, args.steps, args.steps_ql if args.steps_ql else args.steps)
+                queue.append((tag, build_command(algo, map_name, seed, steps, out), out))
 
     print(f"队列 {len(queue)} 个 run，并发 {args.concurrency}", flush=True)
+    if args.dry_run:
+        for tag, command, _out in queue:
+            print(f"  {tag:<32} steps={command[command.index('--steps') + 1]}")
+        return 0
     running: list[tuple[str, subprocess.Popen, object]] = []
     started_at = time.time()
 

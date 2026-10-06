@@ -15,17 +15,17 @@ mkdir -p results logs
 
 echo "===== $(date '+%Y-%m-%d %H:%M:%S') MARL 实验开始 ====="
 
-# 第一批：MAPPO / IPPO × {5_units, 10_units} × 3 seeds，1e7 步。
-# 并发 4 是有依据的：每个 JAX CPU 进程大约吃 3 个核，这台机器 12 核。
-.venv/bin/python experiments/scheduler.py --engine ppo --concurrency 4 --steps 1e7 \
-    --algo mappo,ippo --map smacv2_5_units,smacv2_10_units --seed 0,1,2
-
-echo "===== $(date '+%H:%M:%S') 第一批结束，开始 PQN-VDN ====="
-
-# 第二批：值学习那一派。慢得多（实测约 2k 步/秒，PPO 是 5~8k），
-# 所以预算砍到 5e6，只跑 5_units、3 个种子。
-.venv/bin/python experiments/scheduler.py --engine ql --concurrency 3 --steps 5e6 \
-    --algo pqn_vdn_rnn --map smacv2_5_units --seed 0,1,2
+# 全部 10 个 run 放进同一个队列，让短任务去填空出来的槽。
+# 分两批串行跑过一版，实测总时长更长（第一批 84 min + 第二批 56 min），
+# 合并后短任务（ippo_5_units 只要 30 min）能提前腾出槽位给长任务。
+#
+# 并发 6 的依据：BENCHMARK.md 的扫描显示 6 进程聚合 23,306 步/秒（8 进程是
+# 24,593，只多 5%），但单 run 快 26%，而且内存只占 6×1.18=7.1 GB。
+.venv/bin/python experiments/scheduler.py --engine ppo --concurrency 6 \
+    --steps 1e7 --steps-ql 5e6 \
+    --algo mappo,ippo,pqn_vdn_rnn \
+    --map smacv2_5_units,smacv2_10_units --map-ql smacv2_5_units \
+    --seed 0,1,2
 
 echo "===== $(date '+%Y-%m-%d %H:%M:%S') 全部实验结束 ====="
 ls -1 results/*.summary.json 2>/dev/null | wc -l | tr -d ' ' | sed 's/$/ 个 run 完成/'

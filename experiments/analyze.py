@@ -7,11 +7,14 @@
                     （还有 test_* 版本，是带 epsilon=0 的贪心评测，更干净）
 这里统一成 win_rate / return 两个名字，PQN-VDN 优先用 test_* 那条。
 
-用法：python experiments/analyze.py
+用法：
+  python experiments/analyze.py                    # 全长度曲线
+  python experiments/analyze.py --max-step 5e6     # 截到统一预算，公平对比
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 from collections import defaultdict
 from pathlib import Path
@@ -116,15 +119,24 @@ def last_finite(values: np.ndarray) -> float:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--max-step", type=float, default=None,
+                        help="截断到统一的环境步预算（三个算法预算不同时用它对齐）")
+    parser.add_argument("--suffix", default="", help="输出文件名后缀")
+    args = parser.parse_args()
+
     runs = load_runs()
     if not runs:
         print("还没有任何结果")
         return 1
+    if args.max_step:
+        runs = {k: [p for p in v if p[0] <= args.max_step * 1.001] for k, v in runs.items()}
+        runs = {k: v for k, v in runs.items() if len(v) >= 2}
 
     maps = sorted({key[1] for key in runs})
     algos = sorted({key[0] for key in runs})
     max_step = max(p[0] for points in runs.values() for p in points)
-    grid = np.linspace(0, max_step, 200)
+    grid = np.linspace(0, args.max_step or max_step, 200)
 
     agg = aggregate(runs, grid)
 
@@ -153,7 +165,7 @@ def main() -> int:
             }
     print()
 
-    with (RESULTS / "summary.json").open("w", encoding="utf-8") as fh:
+    with (RESULTS / f"summary{args.suffix}.json").open("w", encoding="utf-8") as fh:
         json.dump(summary, fh, ensure_ascii=False, indent=2)
 
     # ---- 画图 ----
@@ -162,8 +174,8 @@ def main() -> int:
     import matplotlib.pyplot as plt
 
     for metric, ylabel, fname in (
-        ("win", "Evaluation win rate", "compare_win_rate.png"),
-        ("ret", "Episodic return", "compare_return.png"),
+        ("win", "Evaluation win rate", f"compare_win_rate{args.suffix}.png"),
+        ("ret", "Episodic return", f"compare_return{args.suffix}.png"),
     ):
         fig, axes = plt.subplots(1, len(maps), figsize=(6.0 * len(maps), 4.4), squeeze=False)
         for col, map_name in enumerate(maps):
